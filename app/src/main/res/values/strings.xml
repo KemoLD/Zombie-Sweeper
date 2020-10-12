@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">My Application</string>
     <string name="minesweeper">Minesweeper</string>
+    <string name="skip">skip</string>
+    <string name="authors">Made by Nyarika Kemo SOnko</string>
+    <string name="appiconinhomescreen">appiconinhomescreen</string>
 </resources>
