@@ -33,13 +33,13 @@ public class MainActivity extends AppCompatActivity {
 
 
         startanimation();
+        final Intent intent = new Intent(MainActivity.this, MainMenu.class);
 
         Button skip = (Button)findViewById(R.id.skipbutton);
         skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MainMenu.class);
-                startActivity(intent);;
+                startActivity(intent);
                 finish();
             }
         });
@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(MainActivity.this, MainMenu.class);
                 startActivity(intent);;
                 finish();
             }
