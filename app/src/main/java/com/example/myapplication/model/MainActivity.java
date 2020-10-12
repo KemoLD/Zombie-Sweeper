@@ -18,9 +18,9 @@ import com.example.myapplication.R;
 public class MainActivity extends AppCompatActivity {
 
     public static int timer = 6000;
-    TextView welcomeText;
-    ImageView Icon;
-    Button skip;
+    private TextView welcomeText;
+    private ImageView Icon;
+    private Button skip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
