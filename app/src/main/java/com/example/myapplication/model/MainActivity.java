@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView welcomeText;
     private ImageView Icon;
     private Button skip;
+    private static boolean active = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                active = false;
                 startActivity(intent);
                 finish();
             }
@@ -47,8 +49,11 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(intent);;
-                finish();
+                if(active) {
+                    startActivity(intent);
+                    ;
+                    finish();
+                }
             }
         },timer);
 
