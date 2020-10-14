@@ -4,4 +4,8 @@
     <string name="skip">skip</string>
     <string name="authors">Made by Nyarika Kemo Sonko and Micah Lau</string>
     <string name="appiconinhomescreen">appiconinhomescreen</string>
+    <string name="main_menu">Main Menu</string>
+    <string name="play">play</string>
+    <string name="options">options</string>
+    <string name="help">help</string>
 </resources>

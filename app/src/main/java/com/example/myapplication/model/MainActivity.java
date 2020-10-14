@@ -18,9 +18,10 @@ import com.example.myapplication.R;
 public class MainActivity extends AppCompatActivity {
 
     public static int timer = 6000;
-    TextView welcomeText;
-    ImageView Icon;
-    Button skip;
+    private TextView welcomeText;
+    private ImageView Icon;
+    private Button skip;
+    private static boolean active = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +34,14 @@ public class MainActivity extends AppCompatActivity {
 
 
         startanimation();
+        final Intent intent = new Intent(MainActivity.this, MainMenu.class);
 
         Button skip = (Button)findViewById(R.id.skipbutton);
         skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MainMenu.class);
-                startActivity(intent);;
+                active = false;
+                startActivity(intent);
                 finish();
             }
         });
@@ -47,9 +49,11 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(MainActivity.this, MainMenu.class);
-                startActivity(intent);;
-                finish();
+                if(active) {
+                    startActivity(intent);
+                    ;
+                    finish();
+                }
             }
         },timer);
 
