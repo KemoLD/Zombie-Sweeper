@@ -64,6 +64,4 @@ public class MainActivity extends AppCompatActivity {
         Icon.startAnimation(icon);
 
     }
-
-    //re-testing commit and push (Micah)
 }
