@@ -8,4 +8,9 @@
     <string name="play">play</string>
     <string name="options">options</string>
     <string name="help">help</string>
+    <string name="board_size">Board size</string>
+    <string name="optionsmenuheader">Options</string>
+    <string name="optionsback">back</string>
+    <string name="zombies">zombies</string>
+
 </resources>
