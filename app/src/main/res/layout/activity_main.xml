@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/halloween"
-        android:text="@string/minesweeper"
+        android:text="@string/zombie_sweeper"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         android:textColor="#F40202"
         android:textColorHighlight="#F8F6F6"
@@ -52,10 +52,10 @@
         android:layout_width="100dp"
         android:layout_height="75dp"
         android:layout_marginBottom="4dp"
+        android:contentDescription="@string/appiconinhomescreen"
         app:layout_constraintBottom_toTopOf="@+id/welcomeheader"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/gameicon"
-        android:contentDescription="@string/appiconinhomescreen" />
+        app:srcCompat="@drawable/gameicon" />
 </androidx.constraintlayout.widget.ConstraintLayout>

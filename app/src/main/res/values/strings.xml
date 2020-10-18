@@ -12,5 +12,7 @@
     <string name="optionsmenuheader">Options</string>
     <string name="optionsback">back</string>
     <string name="zombies">zombies</string>
+    <string name="back">back</string>
+    <string name="zombie_sweeper">Zombie Sweeper</string>
 
 </resources>
