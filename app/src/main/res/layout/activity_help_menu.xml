@@ -101,11 +101,15 @@
 
     <TextView
         android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="208dp"
-        tools:layout_editor_absoluteY="637dp" />
+        android:layout_width="209dp"
+        android:layout_height="68dp"
+        android:fontFamily="@font/green"
+        android:text="https://www.deviantart.com/colinrichards/art/Graveyard-Zombie-441849380"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:autoLink="web"
+        tools:layout_editor_absoluteX="183dp"
+        tools:layout_editor_absoluteY="618dp" />
 
     <TextView
         android:id="@+id/textView10"
@@ -114,8 +118,20 @@
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/green"
         android:text="https://game-icons.net/1x1/skoll/raise-zombie.html"
+        android:autoLink="web"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         tools:layout_editor_absoluteY="552dp" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="334dp"
+        android:layout_height="198dp"
+        android:fontFamily="@font/green"
+        android:text="There are zombies hidden in then graveyard. Tapping on a tomb inspect it and reveals its content. If a zombie is hidden in the tomb, it while be revealed. Otherwise, this will trigeer a scan that shows the number of zombies left in that same row and column"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        tools:layout_editor_absoluteX="49dp"
+        tools:layout_editor_absoluteY="272dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
