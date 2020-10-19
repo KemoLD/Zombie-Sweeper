@@ -68,7 +68,7 @@
         android:id="@+id/boardsizespinner"
         android:layout_width="125dp"
         android:layout_height="34dp"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="219dp"
         android:background="@android:color/darker_gray"
         android:popupBackground="@android:color/darker_gray"
