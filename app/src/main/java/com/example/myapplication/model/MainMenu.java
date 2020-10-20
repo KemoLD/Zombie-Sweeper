@@ -1,5 +1,6 @@
 package com.example.myapplication.model;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -15,6 +16,9 @@ public class MainMenu extends AppCompatActivity {
     private Button playbutton;
     private Button optionsbutton;
     private Button helpButton;
+    private int columns = 4;
+    private int rows = 6;
+    private int nmbzombies = 6;
 
 
     @Override
@@ -37,6 +41,9 @@ public class MainMenu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent options = new Intent(MainMenu.this,OptionsMenu.class );
+                options.putExtra("columns",columns );
+                options.putExtra("rows",rows);
+                options.putExtra("nmbzombies", nmbzombies);
                 startActivityForResult(options, 1);
             }
         });
@@ -49,5 +56,24 @@ public class MainMenu extends AppCompatActivity {
                 startActivity(help);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK){
+            assert data != null;
+            int col = data.getIntExtra("columns", 0);
+            int row = data.getIntExtra("rows", 0 );
+            int nmb = data.getIntExtra("zombies",0);
+            if(col != 0 && row!= 0){
+                columns = col;
+                rows = row;
+            }
+            if(nmb != 0){
+               nmbzombies = nmb;
+            }
+        }
     }
 }

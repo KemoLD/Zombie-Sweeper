@@ -8,6 +8,23 @@
     <string name="play">play</string>
     <string name="options">options</string>
     <string name="help">help</string>
+    <string name="board_size">Board size</string>
+    <string name="optionsmenuheader">Options</string>
+    <string name="optionsback">back</string>
+    <string name="zombies">zombies</string>
+    <string name="back">back</string>
+    <string name="zombie_sweeper">Zombie Sweeper</string>
+    <string name="ressources">Ressources:</string>
+    <string name="authorsnames">Authors:</string>
+    <string name="nyarika_kemo_sonko_micah_lau">Nyarika Kemo Sonko and Micah Lau</string>
+    <string name="https_opencoursehub_cs_sfu_ca_bfraser_grav_cms_cmpt276_home">https://opencoursehub.cs.sfu.ca/bfraser/grav-cms/cmpt276/home</string>
+    <string name="game_description">Game description:</string>
+    <string name="there_are_zombies_hidden_in_then_graveyard_tapping_on_a_tomb_inspect_it_and_reveals_its_content_if_a_zombie_is_hidden_in_the_tomb_it_while_be_revealed_otherwise_this_will_trigeer_a_scan_that_shows_the_number_of_zombies_left_in_that_same_row_and_column">There are zombies hidden in the graveyard. Tapping on a tomb inspects it and reveals its content. If a zombie is hidden in the tomb, it while be revealed. Otherwise, this will trigger a scan that shows the number of zombies left in that same row and column</string>
+    <string name="https_www_deviantart_com_colinrichards_art_graveyard_zombie_441849380">https://www.deviantart.com/colinrichards/art/Graveyard-Zombie-441849380</string>
+    <string name="background">Background</string>
+    <string name="icon">Icon</string>
+    <string name="https_game_icons_net_1x1_skoll_raise_zombie_html">https://game-icons.net/1x1/skoll/raise-zombie.html</string>
+
     <string name="scansUsed">Number of scans used: </string>
     <string name="minesFound">Found x of y mines.</string>
 </resources>
