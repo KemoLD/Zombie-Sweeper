@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".model.GameScreenActivity"/>
         <activity android:name=".model.HelpMenu" />
         <activity android:name=".model.OptionsMenu" />
         <activity android:name=".model.MainMenu" />

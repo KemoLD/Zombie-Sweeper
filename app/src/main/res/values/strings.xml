@@ -8,4 +8,6 @@
     <string name="play">play</string>
     <string name="options">options</string>
     <string name="help">help</string>
+    <string name="scansUsed">Number of scans used: </string>
+    <string name="minesFound">Found x of y mines.</string>
 </resources>
