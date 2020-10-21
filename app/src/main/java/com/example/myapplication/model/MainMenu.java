@@ -42,7 +42,7 @@ public class MainMenu extends AppCompatActivity {
             public void onClick(View v) {
                 Intent options = new Intent(MainMenu.this,OptionsMenu.class );
                 options.putExtra("columns",columns );
-                options.putExtra("rows",rows);
+                options.putExtra("rows", rows);
                 options.putExtra("nmbzombies", nmbzombies);
                 startActivityForResult(options, 1);
             }
