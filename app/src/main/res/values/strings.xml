@@ -25,6 +25,7 @@
     <string name="icon">Icon</string>
     <string name="https_game_icons_net_1x1_skoll_raise_zombie_html">https://game-icons.net/1x1/skoll/raise-zombie.html</string>
 
-    <string name="scansUsed">Number of scans used: </string>
-    <string name="minesFound">Found x of y mines.</string>
+    <string name="scansUsed">Number of tombstones tripped on: </string>
+    <string name="minesFound">Found x of y zombies.</string>
+    <string name="msg_won">!!!CONGRATULATIONS!!!\nYou Completed the Game! </string>
 </resources>

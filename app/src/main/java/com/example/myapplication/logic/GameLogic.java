@@ -1,13 +1,22 @@
 package com.example.myapplication.logic;
 
-//import ...
+import com.example.myapplication.model.GameScreenActivity;
+
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.widget.Button;
+import android.widget.Toast;
+
+import com.example.myapplication.R;
 
 public class GameLogic {
 
     /*
-    onClickListener ... {
+    while (numZombiesfound != numZombies){
 
-        if (cell.isBomb == true){
+        if (cell.isZombie == true){
             if (cell.isRevealed == true) {
                 if (cell.isScanned == true) {
                     return;
@@ -17,11 +26,11 @@ public class GameLogic {
             }
 
             else if (cell.isRevealed != true) {
-                cell.revealBomb;
+                cell.revealCell;
             }
         }
 
-        else if (cell.isBomb != true){
+        else if (cell.isZombie == false){
             if (cell.isScanned == true){
                 return;
             }
@@ -32,6 +41,11 @@ public class GameLogic {
         }
 
     }
-    */
+
+    Toast.makeText(this, "CONGRATULATIONS! YOU FINISHED THE GAME!", Toast.LENGTH_SHORT).show(); <- displays once all zombies are found
+
+     */
+
+
 
 }

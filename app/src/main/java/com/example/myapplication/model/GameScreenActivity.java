@@ -15,15 +15,22 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 
+import java.util.ArrayList;
+
 public class GameScreenActivity extends AppCompatActivity {
 
-    private static final int NUM_COLS = 3; //chosen number of columns from OptionsMenu
-    private static final int NUM_ROWS = 2; //chosen number of rows from OptionsMenu
+    private final int NUM_COLS = getIntent().getIntExtra("columns",0); //chosen number of columns from OptionsMenu
+    private final int NUM_ROWS = getIntent().getIntExtra("rows",0); //chosen number of rows from OptionsMenu
+
+    int numOfZombies = 5; //chosen number of zombies from OptionsMenu
 
     Button buttons[][] = new Button[NUM_ROWS][NUM_COLS];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //NUM_COLS = getIntent().getIntExtra("columns",0);
+        //NUM_ROWS = getIntent().getIntExtra("rows",0);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_screen);
 
@@ -47,12 +54,15 @@ public class GameScreenActivity extends AppCompatActivity {
                 button.setText("" + col + ", " + row);
 
                 button.setPadding(0, 0, 0, 0); //So small buttons don't cut text
+
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        //boolean clicked = false;
                         gridButtonClicked(FINAL_COL,FINAL_ROW);
                     }
                 });
+
 
                 tableRow.addView(button);
                 buttons[row][col] = button;
@@ -61,28 +71,34 @@ public class GameScreenActivity extends AppCompatActivity {
     }
 
     private void gridButtonClicked(int col, int row) {
-        Toast.makeText(this, "Button clicked: " + col + ", " + row, Toast.LENGTH_SHORT).show();
+
+        //Toast.makeText(this, "Button clicked: " + col + ", " + row, Toast.LENGTH_SHORT).show();
         Button button = buttons[row][col];
 
-        //lock button sizes
-        lockButtonSizes();
+        lockButtonSizes(); //lock button sizes
 
         /*
-        * Scale image to button on devices older than 4.1
-        * button.setBackgroundResource(R.drawable.gameicon);
-        * rescale starting bitmap to one that is small enough that it can stretch up but button won't change its size
-        */
+         * Scale image to button on devices older than 4.1
+         * button.setBackgroundResource(R.drawable.gameicon);
+         * rescale starting bitmap to one that is small enough that it can stretch up but button won't change its size
+         */
 
-        //scale image to button in JellyBean
+        //scale image to button in JellyBean (4.1 or newer)
         int newWidth = button.getWidth();
         int newHeight = button.getHeight();
         Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.gameicon);
         Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, true);
         Resources resource = getResources();
-        button.setBackground(new BitmapDrawable(resource, scaledBitmap));
 
-        //change text on button - change this to use resource string with place holders
-        button.setText("" + col);
+        if ((row == 2) && (col == 2)){ //if button == zombie
+            Toast.makeText(this, "ZOMBIE FOUND", Toast.LENGTH_SHORT).show();
+            button.setText("");
+            button.setBackground(new BitmapDrawable(resource, scaledBitmap));
+        }
+        else{
+            Toast.makeText(this, "Button clicked: " + col + ", " + row, Toast.LENGTH_SHORT).show();
+            button.setText("Scan");
+        }
 
     }
 

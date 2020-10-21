@@ -32,6 +32,9 @@ public class MainMenu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent start = new Intent(MainMenu.this, GameScreenActivity.class);
+                start.putExtra("columns",columns );
+                start.putExtra("rows",rows);
+                start.putExtra("nmbzombies", nmbzombies);
                 startActivity(start);
             }
         });
