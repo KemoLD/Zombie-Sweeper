@@ -14,6 +14,7 @@ import android.widget.TableRow;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
+import com.example.myapplication.logic.Cell;
 
 import java.util.ArrayList;
 
@@ -54,6 +55,7 @@ public class GameScreenActivity extends AppCompatActivity {
                 final int FINAL_COL =col;
                 final int FINAL_ROW = row;
                 Button button = new Button(this);
+                final Cell ButtonManager = new Cell(button);
                 
                 button.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1.0f));
 
@@ -66,6 +68,7 @@ public class GameScreenActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         //boolean clicked = false;
                         gridButtonClicked(FINAL_COL,FINAL_ROW);
+                        ButtonManager.setClicked();
                     }
                 });
 

@@ -13,8 +13,8 @@ public class Cell {
 
     private Button button;
 
-    public Cell(Button button) {
-        button = new Button();
+    public Cell(Button Jbutton) {
+        button = Jbutton;
         isCLicked = false;
         isScanned = false;
         isRevealed = false;
@@ -39,6 +39,18 @@ public class Cell {
 
     public boolean isZombie() {
         return isZombie;
+    }
+
+    public void setClicked(){
+        isCLicked = true;
+    }
+
+    public void setRevealed() {
+        isRevealed = true;
+    }
+
+    public void setScanned() {
+        isScanned = true;
     }
 }
 
