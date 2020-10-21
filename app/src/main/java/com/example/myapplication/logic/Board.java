@@ -10,10 +10,17 @@ public class Board {
 
     public int numNeighbourZombies;
 
-    /*
-    scan(){
+    int scan(buttons[row][col]);{
+
+        numNeighbourZombies = 0;
+
+        for (cell in buttons[row]){
+            if ((cell.isZombie == true) && (cell.isRevealed == false)){
+                numNeighbourZombies ++;
+            }
+        }
+
         return numNeighbourZombies;
     }
-    */
 
 }

@@ -19,12 +19,12 @@ import java.util.ArrayList;
 
 public class GameScreenActivity extends AppCompatActivity {
 
-    private final int NUM_COLS = getIntent().getIntExtra("columns",0); //chosen number of columns from OptionsMenu
-    private final int NUM_ROWS = getIntent().getIntExtra("rows",0); //chosen number of rows from OptionsMenu
+    private int NUM_COLS; //getIntent().getIntExtra("columns",0); //chosen number of columns from OptionsMenu
+    private int NUM_ROWS; //getIntent().getIntExtra("rows",0); //chosen number of rows from OptionsMenu
 
     int numOfZombies = 5; //chosen number of zombies from OptionsMenu
 
-    Button buttons[][] = new Button[NUM_ROWS][NUM_COLS];
+    Button buttons[][];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +33,11 @@ public class GameScreenActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_screen);
+
+        NUM_COLS = getIntent().getIntExtra("columns",0);
+        NUM_ROWS = getIntent().getIntExtra("rows",0);
+
+        buttons = new Button[NUM_ROWS][NUM_COLS];
 
         populateButtons();
     }
@@ -49,6 +54,7 @@ public class GameScreenActivity extends AppCompatActivity {
                 final int FINAL_COL =col;
                 final int FINAL_ROW = row;
                 Button button = new Button(this);
+                
                 button.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1.0f));
 
                 button.setText("" + col + ", " + row);
