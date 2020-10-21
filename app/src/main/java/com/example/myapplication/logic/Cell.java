@@ -1,12 +1,10 @@
 package com.example.myapplication.logic;
 
-import android.content.Context;
-import android.util.AttributeSet;
 import android.widget.Button;
 
 public class Cell {
 
-    private boolean isCLicked;
+    private boolean isClicked;
     private boolean isScanned;
     private boolean isRevealed;
     private boolean isZombie;
@@ -15,7 +13,7 @@ public class Cell {
 
     public Cell(Button Jbutton) {
         button = Jbutton;
-        isCLicked = false;
+        isClicked = false;
         isScanned = false;
         isRevealed = false;
         isZombie= false;
@@ -25,8 +23,8 @@ public class Cell {
         return button;
     }
 
-    public boolean isCLicked() {
-        return isCLicked;
+    public boolean isClicked() {
+        return isClicked;
     }
 
     public boolean isScanned() {
@@ -39,6 +37,26 @@ public class Cell {
 
     public boolean isZombie() {
         return isZombie;
+    }
+
+    public void setClicked(boolean clicked) {
+        isClicked = clicked;
+    }
+
+    public void setScanned(boolean scanned) {
+        isScanned = scanned;
+    }
+
+    public void setRevealed(boolean revealed) {
+        isRevealed = revealed;
+    }
+
+    public void setZombie(boolean zombie) {
+        isZombie = zombie;
+    }
+
+    public void setButton(Button button) {
+        this.button = button;
     }
 }
 

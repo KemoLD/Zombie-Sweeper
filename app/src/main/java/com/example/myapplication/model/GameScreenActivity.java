@@ -52,6 +52,7 @@ public class GameScreenActivity extends AppCompatActivity {
 
         buttons = new Button[NUM_ROWS][NUM_COLS];
 
+
         zombiecells = new int[NUM_ZOMBIES * 2];
         for (int i = 0; i < NUM_ZOMBIES * 2; i = i+2){
             int int_random = rand.nextInt(NUM_ROWS);
@@ -61,6 +62,7 @@ public class GameScreenActivity extends AppCompatActivity {
             int int_random2 = rand.nextInt(NUM_COLS);
             zombiecells[j] = int_random2;
         }
+
 
         populateButtons();
 
@@ -87,10 +89,13 @@ public class GameScreenActivity extends AppCompatActivity {
 
                 button.setPadding(0, 0, 0, 0); //So small buttons don't cut text
 
+
+
                 if ((zombiecells[zombiecellsCnt] == row) && (zombiecells[zombiecellsCnt+1]) == col){
                     ButtonManager.setZombie(true);
                     zombiecellsCnt = zombiecellsCnt + 2;
                 }
+
 
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -142,7 +147,7 @@ public class GameScreenActivity extends AppCompatActivity {
 
                 if (ButtonManager.isScanned() == false) {
                     Toast.makeText(this, "Scanning row " + row + " and column " + col, Toast.LENGTH_SHORT).show();
-                    String tmp = String.valueOf(scan());
+                    String tmp = String.valueOf(scan(col, row));
                     button.setText(tmp);
                     //button.setText(scan());
                     numScans.setText("Number of tombstones tripped on:" + NUM_SCANS);
@@ -159,7 +164,7 @@ public class GameScreenActivity extends AppCompatActivity {
 
             if (ButtonManager.isScanned() == false) {
                 Toast.makeText(this, "Scanning row " + row + " and column " + col, Toast.LENGTH_SHORT).show();
-                String tmp2 = String.valueOf(scan());
+                String tmp2 = String.valueOf(scan(col, row));
                 button.setText(tmp2);
                 //button.setText(scan());
                 numScans.setText("Number of tombstones tripped on:" + NUM_SCANS);
@@ -169,9 +174,14 @@ public class GameScreenActivity extends AppCompatActivity {
         }
     }
 
-    private int scan() {
+    private int scan(int col, int row) {
         int scan_result = 0;
+
         //scan
+        for (int i = 0; i < NUM_COLS; i++){
+            //if (buttons[i][col] )
+        }
+
         NUM_SCANS ++;
         return scan_result;
     }
