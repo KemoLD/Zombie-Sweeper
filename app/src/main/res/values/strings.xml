@@ -24,6 +24,10 @@
     <string name="background">Background</string>
     <string name="icon">Icon</string>
     <string name="https_game_icons_net_1x1_skoll_raise_zombie_html">https://game-icons.net/1x1/skoll/raise-zombie.html</string>
+    <string name="https_www_dreamstime_com_royalty_free_stock_images_cartoon_grave_image27653259">https://www.dreamstime.com/royalty-free-stock-images-cartoon-grave-image27653259</string>
+    <string name="grid_images">Grid Images</string>
+    <string name="https_www_iconspng_com_image_123833_grave_rip">https://www.iconspng.com/image/123833/grave-rip</string>
+    <string name="https_www_shutterstock_com_image_vector_stone_tombstone_stands_on_ground_grave_1481770103l">https://www.shutterstock.com/image-vector/stone-tombstone-stands-on-ground-grave-1481770103l</string>
 
     <string name="scansUsed">Number of tombstones tripped on: </string>
     <string name="minesFound">Found x of y zombies.</string>

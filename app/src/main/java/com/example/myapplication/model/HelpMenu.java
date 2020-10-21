@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import com.example.myapplication.R;
 
+//help menu activity
 public class HelpMenu extends AppCompatActivity {
 
     private Button back;

@@ -15,9 +15,10 @@ import android.widget.TextView;
 
 import com.example.myapplication.R;
 
+//welcome screen
 public class MainActivity extends AppCompatActivity {
 
-    public static int timer = 6000;
+    public static int timer = 6000;  //the timer of 6 secs
     private TextView welcomeText;
     private ImageView Icon;
     private Button skip;
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //makes the activity full screen
 
         welcomeText = (TextView)findViewById(R.id.welcomeheader);
         Icon = (ImageView) findViewById(R.id.appicon);
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         startanimation();
         final Intent intent = new Intent(MainActivity.this, MainMenu.class);
 
+        //if the button is pressed the main menu is opened
         Button skip = (Button)findViewById(R.id.skipbutton);
         skip.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //if the button is not pressed the activity closes after 6 secs
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -60,11 +63,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //starts animations for the activity
     public void startanimation(){
         Animation welcomeAnimation = AnimationUtils.loadAnimation(this, R.anim.welcomescreentext);
         welcomeText.startAnimation(welcomeAnimation);
 
-        Animation icon = AnimationUtils.loadAnimation(this, R.anim.welcomeappicon);
+        Animation  icon = AnimationUtils.loadAnimation(this, R.anim.welcomeappicon);
         Icon.startAnimation(icon);
 
     }

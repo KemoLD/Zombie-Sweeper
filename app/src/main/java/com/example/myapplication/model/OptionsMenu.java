@@ -17,6 +17,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+//settings(options) activity
 public class OptionsMenu extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private int boardrows;
@@ -35,7 +36,7 @@ public class OptionsMenu extends AppCompatActivity implements AdapterView.OnItem
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         final Intent result = new Intent();
-        minesnmb = new ArrayList<>();
+        minesnmb = new ArrayList<>(); //create an arraylist to store the selection of mines
         columns = new ArrayList<>();
         rows = new ArrayList<>();
 
@@ -54,7 +55,7 @@ public class OptionsMenu extends AppCompatActivity implements AdapterView.OnItem
                 if(nmbofzombies != getIntent().getIntExtra("nmbzombies", 0)){
                     result.putExtra("zombies", nmbofzombies);
                 }
-                if(boardcolumns != getIntent().getIntExtra("columns",0) || nmbofzombies != getIntent().getIntExtra("nmbzombies", 0) ){
+                if(boardcolumns != getIntent().getIntExtra("columns",0) || nmbofzombies != getIntent().getIntExtra("nmbzombies", 0) ){ //if no settings are changed
                     setResult(RESULT_OK, result);
                     finish();
                 }
@@ -73,7 +74,7 @@ public class OptionsMenu extends AppCompatActivity implements AdapterView.OnItem
         //String text = parent.getItemAtPosition(position).toString();
 
         if (parent.getId() == R.id.boardsizespinner){
-            if(position != 0) {
+            if(position != 0) { //if it is a different option than the one selected
                 boardcolumns = columns.get(position);
                 boardrows = rows.get(position);
             }
@@ -90,6 +91,7 @@ public class OptionsMenu extends AppCompatActivity implements AdapterView.OnItem
 
     }
 
+    //adds different number of zombies to the spinner
     public void zombiesspinner() {
         List<String> nmbzombies = new ArrayList<>();
 
@@ -121,6 +123,7 @@ public class OptionsMenu extends AppCompatActivity implements AdapterView.OnItem
         mines.setOnItemSelectedListener(this);
     }
 
+    //sets a selections of board sizes to the spinner
     public void boardsizespinner(){
         List<String> boardsizelist = new ArrayList<>();
 
