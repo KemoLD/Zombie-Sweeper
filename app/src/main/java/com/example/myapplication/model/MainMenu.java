@@ -11,6 +11,7 @@ import android.widget.Button;
 
 import com.example.myapplication.R;
 
+//main menu activity
 public class MainMenu extends AppCompatActivity {
 
     private Button playbutton;
@@ -27,6 +28,7 @@ public class MainMenu extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        //launches the game
         playbutton = (Button)findViewById(R.id.playbutton) ;
         playbutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,6 +38,7 @@ public class MainMenu extends AppCompatActivity {
             }
         });
 
+        //launches the options activity and sends the selected settings
         optionsbutton = (Button)findViewById(R.id.optionsbutton);
         optionsbutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,6 +51,7 @@ public class MainMenu extends AppCompatActivity {
             }
         });
 
+        //launches the help activity
         helpButton = (Button)findViewById(R.id.helpbutton);
         helpButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,13 +62,14 @@ public class MainMenu extends AppCompatActivity {
         });
     }
 
+    //this method gets the new setting from the options activity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK){
             assert data != null;
-            int col = data.getIntExtra("columns", 0);
+            int col = data.getIntExtra("columns", 0);  //passes the size and number of mines variables
             int row = data.getIntExtra("rows", 0 );
             int nmb = data.getIntExtra("zombies",0);
             if(col != 0 && row!= 0){

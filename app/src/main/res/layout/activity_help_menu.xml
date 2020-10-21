@@ -132,7 +132,6 @@
                 android:textSize="20sp"
                 android:padding="10dp" />
 
-
             <TextView
                 android:id="@+id/textView10"
                 android:layout_width="fill_parent"
@@ -140,6 +139,50 @@
                 android:autoLink="web"
                 android:fontFamily="@font/green"
                 android:text="@string/https_game_icons_net_1x1_skoll_raise_zombie_html"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:autoLink="web"
+                android:fontFamily="@font/green"
+                android:padding="10dp"
+                android:text="@string/grid_images"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:autoLink="web"
+                android:fontFamily="@font/green"
+                android:padding="10dp"
+                android:text="@string/https_www_shutterstock_com_image_vector_stone_tombstone_stands_on_ground_grave_1481770103l"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:autoLink="web"
+                android:fontFamily="@font/green"
+                android:padding="10dp"
+                android:text="@string/https_www_iconspng_com_image_123833_grave_rip"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:autoLink="web"
+                android:fontFamily="@font/green"
+                android:padding="10dp"
+                android:text="@string/https_www_dreamstime_com_royalty_free_stock_images_cartoon_grave_image27653259"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp" />
 
