@@ -14,7 +14,7 @@ public class Cell {
     private Button button;
 
     public Cell(Button button) {
-        button = new Button();
+        //button = new Button();
         isCLicked = false;
         isScanned = false;
         isRevealed = false;

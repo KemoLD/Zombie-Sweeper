@@ -10,6 +10,7 @@ public class Board {
 
     public int numNeighbourZombies;
 
+    /*
     int scan(buttons[row][col]);{
 
         numNeighbourZombies = 0;
@@ -22,5 +23,6 @@ public class Board {
 
         return numNeighbourZombies;
     }
+    */
 
 }
