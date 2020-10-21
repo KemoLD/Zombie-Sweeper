@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         Animation welcomeAnimation = AnimationUtils.loadAnimation(this, R.anim.welcomescreentext);
         welcomeText.startAnimation(welcomeAnimation);
 
-        Animation icon = AnimationUtils.loadAnimation(this, R.anim.welcomeappicon);
+        Animation  icon = AnimationUtils.loadAnimation(this, R.anim.welcomeappicon);
         Icon.startAnimation(icon);
 
     }
