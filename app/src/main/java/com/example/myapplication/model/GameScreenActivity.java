@@ -2,6 +2,7 @@ package com.example.myapplication.model;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.Toast;
+import android.os.Vibrator;
 
 import com.example.myapplication.R;
 import com.example.myapplication.logic.Cell;
@@ -22,6 +24,7 @@ public class GameScreenActivity extends AppCompatActivity {
 
     private int NUM_COLS; //getIntent().getIntExtra("columns",0); //chosen number of columns from OptionsMenu
     private int NUM_ROWS; //getIntent().getIntExtra("rows",0); //chosen number of rows from OptionsMenu
+    Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
     int numOfZombies = 5; //chosen number of zombies from OptionsMenu
 
@@ -101,11 +104,13 @@ public class GameScreenActivity extends AppCompatActivity {
 
         if ((row == 2) && (col == 2)){ //if button == zombie
             Toast.makeText(this, "ZOMBIE FOUND", Toast.LENGTH_SHORT).show();
+            v.vibrate(400);
             button.setText("");
             button.setBackground(new BitmapDrawable(resource, scaledBitmap));
         }
         else{
             Toast.makeText(this, "Button clicked: " + col + ", " + row, Toast.LENGTH_SHORT).show();
+            v.vibrate(400);
             button.setText("Scan");
         }
 
