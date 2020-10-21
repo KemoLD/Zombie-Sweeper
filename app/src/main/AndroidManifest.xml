@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.myapplication">
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
         android:allowBackup="true"
@@ -9,6 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".model.GameScreenActivity"
+            android:screenOrientation="landscape"
+            android:configChanges="keyboard|keyboardHidden|screenSize"/>
         <activity android:name=".model.HelpMenu" />
         <activity android:name=".model.OptionsMenu" />
         <activity android:name=".model.MainMenu" />

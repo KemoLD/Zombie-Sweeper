@@ -29,4 +29,7 @@
     <string name="https_www_iconspng_com_image_123833_grave_rip">https://www.iconspng.com/image/123833/grave-rip</string>
     <string name="https_www_shutterstock_com_image_vector_stone_tombstone_stands_on_ground_grave_1481770103l">https://www.shutterstock.com/image-vector/stone-tombstone-stands-on-ground-grave-1481770103l</string>
 
+    <string name="scansUsed">Number of tombstones tripped on: </string>
+    <string name="minesFound">Found x of y zombies.</string>
+    <string name="msg_won">!!!CONGRATULATIONS!!!\nYou Completed the Game! </string>
 </resources>
