@@ -2,7 +2,6 @@ package com.example.myapplication.model;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,23 +11,32 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
 import android.widget.Toast;
-import android.os.Vibrator;
 
 import com.example.myapplication.R;
 import com.example.myapplication.logic.Cell;
 
-import java.util.ArrayList;
+import java.util.Random;
 
 public class GameScreenActivity extends AppCompatActivity {
 
     private int NUM_COLS; //getIntent().getIntExtra("columns",0); //chosen number of columns from OptionsMenu
     private int NUM_ROWS; //getIntent().getIntExtra("rows",0); //chosen number of rows from OptionsMenu
-    Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
-    int numOfZombies = 5; //chosen number of zombies from OptionsMenu
+    private int NUM_ZOMBIES; //chosen number of zombies from OptionsMenu
+
+    private int NUM_SCANS = 0;
+
+    private int zombiecellsCnt = 0;
+
+    Random rand = new Random();
+
+    TextView numScans;
 
     Button buttons[][];
+
+    public int[] zombiecells;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +48,25 @@ public class GameScreenActivity extends AppCompatActivity {
 
         NUM_COLS = getIntent().getIntExtra("columns",0);
         NUM_ROWS = getIntent().getIntExtra("rows",0);
+        NUM_ZOMBIES = getIntent().getIntExtra("nmbzombies",0);
 
         buttons = new Button[NUM_ROWS][NUM_COLS];
 
+
+        zombiecells = new int[NUM_ZOMBIES * 2];
+        for (int i = 0; i < NUM_ZOMBIES * 2; i = i+2){
+            int int_random = rand.nextInt(NUM_ROWS);
+            zombiecells[i] = int_random;
+        }
+        for (int j = 1; j < NUM_ZOMBIES * 2; j = j+2){
+            int int_random2 = rand.nextInt(NUM_COLS);
+            zombiecells[j] = int_random2;
+        }
+
+
         populateButtons();
+
+        numScans = (TextView)findViewById(R.id.textViewRight);
     }
 
     private void populateButtons() {
@@ -66,12 +89,20 @@ public class GameScreenActivity extends AppCompatActivity {
 
                 button.setPadding(0, 0, 0, 0); //So small buttons don't cut text
 
+
+
+                if ((zombiecells[zombiecellsCnt] == row) && (zombiecells[zombiecellsCnt+1]) == col){
+                    ButtonManager.setZombie(true);
+                    zombiecellsCnt = zombiecellsCnt + 2;
+                }
+
+
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         //boolean clicked = false;
-                        gridButtonClicked(FINAL_COL,FINAL_ROW);
-                        ButtonManager.setClicked();
+                        ButtonManager.setClicked(true);
+                        gridButtonClicked(FINAL_COL,FINAL_ROW, ButtonManager);
                     }
                 });
 
@@ -82,7 +113,7 @@ public class GameScreenActivity extends AppCompatActivity {
         }
     }
 
-    private void gridButtonClicked(int col, int row) {
+    private void gridButtonClicked(int col, int row, Cell ButtonManager) {
 
         //Toast.makeText(this, "Button clicked: " + col + ", " + row, Toast.LENGTH_SHORT).show();
         Button button = buttons[row][col];
@@ -98,22 +129,61 @@ public class GameScreenActivity extends AppCompatActivity {
         //scale image to button in JellyBean (4.1 or newer)
         int newWidth = button.getWidth();
         int newHeight = button.getHeight();
-        Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.gameicon);
+        Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.zombieincell);
         Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, true);
         Resources resource = getResources();
 
-        if ((row == 2) && (col == 2)){ //if button == zombie
-            Toast.makeText(this, "ZOMBIE FOUND", Toast.LENGTH_SHORT).show();
-            v.vibrate(400);
-            button.setText("");
-            button.setBackground(new BitmapDrawable(resource, scaledBitmap));
-        }
-        else{
-            Toast.makeText(this, "Button clicked: " + col + ", " + row, Toast.LENGTH_SHORT).show();
-            v.vibrate(400);
-            button.setText("Scan");
+        if (ButtonManager.isZombie() == true) { //if button == zombie
+            if (ButtonManager.isRevealed() == false) {
+                Toast.makeText(this, "ZOMBIE FOUND", Toast.LENGTH_SHORT).show();
+                button.setText("");
+                button.setBackground(new BitmapDrawable(resource, scaledBitmap));
+                ButtonManager.setRevealed(true);
+            }
+            if (ButtonManager.isRevealed() == true) {
+                if (ButtonManager.isScanned() == true) {
+                    return;
+                }
+
+                if (ButtonManager.isScanned() == false) {
+                    Toast.makeText(this, "Scanning row " + row + " and column " + col, Toast.LENGTH_SHORT).show();
+                    String tmp = String.valueOf(scan(col, row));
+                    button.setText(tmp);
+                    //button.setText(scan());
+                    numScans.setText("Number of tombstones tripped on:" + NUM_SCANS);
+                    ButtonManager.setScanned(true);
+
+                }
+            }
         }
 
+        if (ButtonManager.isZombie() == false) {
+            if (ButtonManager.isScanned() == true) {
+                return;
+            }
+
+            if (ButtonManager.isScanned() == false) {
+                Toast.makeText(this, "Scanning row " + row + " and column " + col, Toast.LENGTH_SHORT).show();
+                String tmp2 = String.valueOf(scan(col, row));
+                button.setText(tmp2);
+                //button.setText(scan());
+                numScans.setText("Number of tombstones tripped on:" + NUM_SCANS);
+                ButtonManager.setScanned(true);
+            }
+
+        }
+    }
+
+    private int scan(int col, int row) {
+        int scan_result = 0;
+
+        //scan
+        for (int i = 0; i < NUM_COLS; i++){
+            //if (buttons[i][col] )
+        }
+
+        NUM_SCANS ++;
+        return scan_result;
     }
 
     private void lockButtonSizes() {
