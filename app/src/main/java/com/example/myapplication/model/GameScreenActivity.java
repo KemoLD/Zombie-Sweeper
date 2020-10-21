@@ -27,12 +27,14 @@ public class GameScreenActivity extends AppCompatActivity {
     private int NUM_ZOMBIES; //chosen number of zombies from OptionsMenu
 
     private int NUM_SCANS = 0;
+    private int NUM_ZOMBS = 0;
 
     private int zombiecellsCnt = 0;
 
     Random rand = new Random();
 
     TextView numScans;
+    TextView numZombies;
 
     Button buttons[][];
 
@@ -67,6 +69,8 @@ public class GameScreenActivity extends AppCompatActivity {
         populateButtons();
 
         numScans = (TextView)findViewById(R.id.textViewRight);
+        numZombies = (TextView)findViewById(R.id.textViewLeft);
+        numZombies.setText("Found " + NUM_ZOMBS + " of " + NUM_ZOMBIES + " Zombies");
     }
 
     private void populateButtons() {
@@ -138,6 +142,8 @@ public class GameScreenActivity extends AppCompatActivity {
                 Toast.makeText(this, "ZOMBIE FOUND", Toast.LENGTH_SHORT).show();
                 button.setText("");
                 button.setBackground(new BitmapDrawable(resource, scaledBitmap));
+                NUM_ZOMBS++;
+                numZombies.setText("Found " + NUM_ZOMBS + " of " + NUM_ZOMBIES + " Zombies");
                 ButtonManager.setRevealed(true);
             }
             if (ButtonManager.isRevealed() == true) {
