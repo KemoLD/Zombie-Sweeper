@@ -12,6 +12,7 @@ import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.PopupWindow;
@@ -51,6 +52,7 @@ public class GameScreenActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_screen);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         NUM_COLS = getIntent().getIntExtra("columns",0);
         NUM_ROWS = getIntent().getIntExtra("rows",0);
