@@ -84,7 +84,7 @@ public class GameScreenActivity extends AppCompatActivity {
                 button.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1.0f));
 
                 button.setPadding(0, 0, 0, 0); //So small buttons don't cut text
-                button.setBackgroundResource(R.drawable.cell);
+                button.setBackground(getResources().getDrawable(R.drawable.cell));
                 //button.setText(""+ ((col * NUM_ROWS  ) + row ));
 
                 int number = (col * NUM_ROWS ) + row;
@@ -119,18 +119,12 @@ public class GameScreenActivity extends AppCompatActivity {
 
         lockButtonSizes(); //lock button sizes
 
-        /*
-         * Scale image to button on devices older than 4.1
-         * button.setBackgroundResource(R.drawable.gameicon);
-         * rescale starting bitmap to one that is small enough that it can stretch up but button won't change its size
-         */
-
 
         if (ButtonManager.isZombie() == true) { //if button == zombie
             if (ButtonManager.isRevealed() == false) {
                 Toast.makeText(this, "ZOMBIE FOUND", Toast.LENGTH_SHORT).show();
                 button.setText("");
-                button.setBackgroundResource(R.drawable.zombieincell);
+                button.setBackground(getResources().getDrawable(R.drawable.zombieincell));
                 NUM_ZOMBS++;
                 numZombies.setText("Found " + NUM_ZOMBS + " of " + NUM_ZOMBIES + " Zombies");
                 ButtonManager.setRevealed(true);
@@ -144,7 +138,6 @@ public class GameScreenActivity extends AppCompatActivity {
                     Toast.makeText(this, "Scanning row " + row + " and column " + col, Toast.LENGTH_SHORT).show();
                     String tmp = String.valueOf(scan(col, row));
                     button.setText(tmp);
-                    //button.setText(scan());
                     numScans.setText("Number of tombstones tripped on:" + NUM_SCANS);
                     ButtonManager.setScanned(true);
 
@@ -161,8 +154,7 @@ public class GameScreenActivity extends AppCompatActivity {
                 Toast.makeText(this, "Scanning row " + row + " and column " + col, Toast.LENGTH_SHORT).show();
                 String tmp2 = String.valueOf(scan(col, row));
                 button.setText(tmp2);
-                button.setBackgroundResource(R.drawable.emptycell);
-                //button.setText(scan());
+                button.setBackground(getResources().getDrawable(R.drawable.emptycell));
                 numScans.setText("Number of tombstones tripped on:" + NUM_SCANS);
                 ButtonManager.setScanned(true);
             }
@@ -188,11 +180,11 @@ public class GameScreenActivity extends AppCompatActivity {
                 Button button = buttons[row][col];
 
                 int width = button.getWidth();
-                //button.setMinWidth(width);
+                button.setMinWidth(width);
                 button.setMaxWidth(width);
 
                 int height = button.getHeight();
-                //button.setMinHeight(height);
+                button.setMinHeight(height);
                 button.setMaxHeight(height);
             }
         }
