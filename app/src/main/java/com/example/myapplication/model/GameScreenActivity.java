@@ -45,7 +45,7 @@ public class GameScreenActivity extends AppCompatActivity {
 
     private Set<Integer> zombiecells;
 
-    private PopupWindow POPUP_WINDOW = null;  //popup menu once game is won
+    private PopupWindow popupWindow;  //popup menu once game is won
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,6 +131,8 @@ public class GameScreenActivity extends AppCompatActivity {
 
     private void gridButtonClicked(int col, int row, Cell ButtonManager) {
 
+        lockButtonSizes();
+
         Button button = buttons[row][col];
 
         int newWidth = button.getWidth();
@@ -180,7 +182,7 @@ public class GameScreenActivity extends AppCompatActivity {
 
                 else {
                     NUM_SCANS++;
-                    numScans.setText("Number of tombstones tripped on:" + NUM_SCANS);
+                    numScans.setText("Number of scans:" + NUM_SCANS);
                     ButtonManager.setScanned(true);
                     scan(col, row);
 
@@ -221,37 +223,33 @@ public class GameScreenActivity extends AppCompatActivity {
 
                 int width = button.getWidth();
                 button.setMinWidth(width);
-                button.setMaxWidth(width);
+                //button.setMaxWidth(width);
 
                 int height = button.getHeight();
                 button.setMinHeight(height);
-                button.setMaxHeight(height);
+                //button.setMaxHeight(height);
             }
         }
     }
 
     public void gameWon(){
-        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
-        int width = displayMetrics.widthPixels;
-        int height = displayMetrics.heightPixels;
 
-        LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View layout = layoutInflater.inflate(R.layout.popupmenu, null);
+        LayoutInflater layoutInflater = (LayoutInflater) GameScreenActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View customView = layoutInflater.inflate(R.layout.popupmenu,null);
 
-        final PopupWindow POPUP_WINDOW = new PopupWindow(this);
-        POPUP_WINDOW.setContentView(layout);
-        POPUP_WINDOW.setWidth(width);
-        POPUP_WINDOW.setHeight(height);
-        POPUP_WINDOW.setFocusable(true);
 
-        POPUP_WINDOW.setBackgroundDrawable(null);
-        POPUP_WINDOW.showAtLocation(layout, Gravity.CENTER, 1, 1);
+        //instantiate popup window
+        popupWindow = new PopupWindow(customView, WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
 
-        Button won = (Button)findViewById(R.id.popupbutton);
+        //display the popup window
+        popupWindow.showAtLocation(customView, Gravity.CENTER, 0, 0);
+
+
+        Button won = (Button)customView.findViewById(R.id.popupbutton);
         won.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                POPUP_WINDOW.dismiss();
+                popupWindow.dismiss();
                 finish();
             }
         });
