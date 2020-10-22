@@ -3,6 +3,10 @@ package com.example.myapplication.model;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -127,12 +131,22 @@ public class GameScreenActivity extends AppCompatActivity {
 
         Button button = buttons[row][col];
 
-        //lockButtonSizes(); //lock button sizes
+        int newWidth = button.getWidth();
+        int newHeight = button.getHeight();
+        Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.zombieincell);
+        Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, true);
+
+        Bitmap emptyBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.emptycell);
+        Bitmap scaledempty = Bitmap.createScaledBitmap(emptyBitmap, newWidth, newHeight, true);
+        Resources resource = getResources();
+
+
+
 
 
         if (ButtonManager.isZombie() == true) { //if button == zombie
             if (ButtonManager.isRevealed() == false) {
-                button.setBackground(getResources().getDrawable(R.drawable.zombieincell));
+                button.setBackground(new BitmapDrawable(resource, scaledBitmap));
                 NUM_ZOMBS++;
                 numZombies.setText("Found " + NUM_ZOMBS + " of " + NUM_ZOMBIES + " Zombies");
                 ButtonManager.setRevealed(true);
@@ -172,7 +186,7 @@ public class GameScreenActivity extends AppCompatActivity {
             }
             else{
                 ButtonManager.setRevealed(true);
-                button.setBackgroundResource(R.drawable.emptycell);
+                button.setBackground(new BitmapDrawable(resource, scaledempty));
             }
         }
     }
@@ -205,9 +219,11 @@ public class GameScreenActivity extends AppCompatActivity {
 
                 int width = button.getWidth();
                 button.setMinWidth(width);
+                button.setMaxWidth(width);
 
                 int height = button.getHeight();
                 button.setMinHeight(height);
+                button.setMaxHeight(height);
             }
         }
     }
