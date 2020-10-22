@@ -188,12 +188,12 @@ public class GameScreenActivity extends AppCompatActivity {
                 Button button = buttons[row][col];
 
                 int width = button.getWidth();
-                button.setMinWidth(width);
-                button.setMinWidth(width);
+                //button.setMinWidth(width);
+                button.setMaxWidth(width);
 
                 int height = button.getHeight();
-                button.setMinHeight(height);
-                button.setMinHeight(height);
+                //button.setMinHeight(height);
+                button.setMaxHeight(height);
             }
         }
     }
