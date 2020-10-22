@@ -33,4 +33,6 @@
     <string name="minesFound">Found x of y zombies.</string>
     <string name="msg_won">!!!CONGRATULATIONS!!!\nYou Completed the Game! </string>
     <string name="congratulation_game_won">Congratulation! Game Won!</string>
+    <string name="http_www_theorangeday_com_author_thomasfrancis">http://www.theorangeday.com/author/thomasfrancis/</string>
+    <string name="game_won_popup_image">GAME WON POPUP IMAGE</string>
 </resources>

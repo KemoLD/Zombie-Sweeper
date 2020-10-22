@@ -20,6 +20,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.os.Vibrator;
 
 import com.example.myapplication.R;
 import com.example.myapplication.logic.Cell;
@@ -38,12 +39,14 @@ public class GameScreenActivity extends AppCompatActivity {
     private int NUM_SCANS = 0;  //for th display
     private int NUM_ZOMBS = 0;  //for the display
 
-    TextView numScans;
-    TextView numZombies;
+    private TextView numScans;
+    private TextView numZombies;
 
-    Button buttons[][];
+    private Vibrator v;
 
-    private Set<Integer> zombiecells;
+    private Button buttons[][];          //holds the cells for the grid
+
+    private Set<Integer> zombiecells;    //holds random numbers to determine which cells have a zombie
 
     private PopupWindow popupWindow;  //popup menu once game is won
 
@@ -53,6 +56,7 @@ public class GameScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_screen);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);  //for the vibration effect
 
         NUM_COLS = getIntent().getIntExtra("columns",0);
         NUM_ROWS = getIntent().getIntExtra("rows",0);
@@ -87,7 +91,8 @@ public class GameScreenActivity extends AppCompatActivity {
 
         for (int row = 0; row < NUM_ROWS; row++){
             TableRow tableRow = new TableRow(this);
-            tableRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT, 1.0f));
+            float tablesize = 6/NUM_ROWS;
+            tableRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,0, 1.0f));
             table.addView(tableRow);
 
             for (int col = 0; col < NUM_COLS; col++){
@@ -96,7 +101,7 @@ public class GameScreenActivity extends AppCompatActivity {
                 Button button = new Button(this);
                 final Cell ButtonManager = new Cell(button, ((col * NUM_ROWS ) + row ));
                 
-                button.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1.0f));
+                button.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 1.0f));
 
                 button.setPadding(0, 0, 0, 0); //So small buttons don't cut text
                 button.setBackground(getResources().getDrawable(R.drawable.cell));
@@ -124,7 +129,7 @@ public class GameScreenActivity extends AppCompatActivity {
 
             }
         }
-        lockButtonSizes();
+        //lockButtonSizes();
 
 
     }
@@ -150,10 +155,13 @@ public class GameScreenActivity extends AppCompatActivity {
 
         if (ButtonManager.isZombie() == true) { //if button == zombie
             if (ButtonManager.isRevealed() == false) {
-                button.setBackground(new BitmapDrawable(resource, scaledBitmap));
+                //button.setBackground(new BitmapDrawable(resource, scaledBitmap));
+                button.setBackground(getResources().getDrawable(R.drawable.zombieincell));
                 NUM_ZOMBS++;
                 numZombies.setText("Found " + NUM_ZOMBS + " of " + NUM_ZOMBIES + " Zombies");
                 ButtonManager.setRevealed(true);
+                button.setText("");   //marks the zombie as seen so that it is not included in the scan
+                v.vibrate(400);   //vibrates for 400 milliseconds
                 if(NUM_ZOMBS == NUM_ZOMBIES){
                     gameWon();
                 }
@@ -166,7 +174,7 @@ public class GameScreenActivity extends AppCompatActivity {
                 else{
                     //Toast.makeText(this, "Scanning row " + row + " and column " + col, Toast.LENGTH_SHORT).show();
                     NUM_SCANS++;
-                    numScans.setText("Number of tombstones tripped on:" + NUM_SCANS);
+                    numScans.setText("Number of scans:" + NUM_SCANS);
                     ButtonManager.setScanned(true);
                     scan(col,row);
 
@@ -176,6 +184,8 @@ public class GameScreenActivity extends AppCompatActivity {
 
         if (ButtonManager.isZombie() == false) {
             if (ButtonManager.isRevealed() == true) {
+                return;
+                /*
                 if (ButtonManager.isScanned() == true) {
                     return;
                 }
@@ -187,10 +197,18 @@ public class GameScreenActivity extends AppCompatActivity {
                     scan(col, row);
 
                 }
+
+                 */
             }
             else{
                 ButtonManager.setRevealed(true);
-                button.setBackground(new BitmapDrawable(resource, scaledempty));
+                //button.setBackground(new BitmapDrawable(resource, scaledempty));
+                button.setBackground(getResources().getDrawable(R.drawable.emptycell));
+                NUM_SCANS++;
+                numScans.setText("Number of scans:" + NUM_SCANS);
+                ButtonManager.setScanned(true);
+                scan(col, row);
+
             }
         }
     }
@@ -223,11 +241,11 @@ public class GameScreenActivity extends AppCompatActivity {
 
                 int width = button.getWidth();
                 button.setMinWidth(width);
-                //button.setMaxWidth(width);
+                button.setMaxWidth(width);
 
                 int height = button.getHeight();
                 button.setMinHeight(height);
-                //button.setMaxHeight(height);
+                button.setMaxHeight(height);
             }
         }
     }
