@@ -44,8 +44,6 @@ public class GameScreenActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //NUM_COLS = getIntent().getIntExtra("columns",0);
-        //NUM_ROWS = getIntent().getIntExtra("rows",0);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_screen);
@@ -127,7 +125,6 @@ public class GameScreenActivity extends AppCompatActivity {
 
     private void gridButtonClicked(int col, int row, Cell ButtonManager) {
 
-        //Toast.makeText(this, "Button clicked: " + col + ", " + row, Toast.LENGTH_SHORT).show();
         Button button = buttons[row][col];
 
         //lockButtonSizes(); //lock button sizes
@@ -148,7 +145,7 @@ public class GameScreenActivity extends AppCompatActivity {
                     return;
                 }
 
-                if (ButtonManager.isScanned() == false) {
+                else{
                     //Toast.makeText(this, "Scanning row " + row + " and column " + col, Toast.LENGTH_SHORT).show();
                     NUM_SCANS++;
                     numScans.setText("Number of tombstones tripped on:" + NUM_SCANS);
@@ -207,12 +204,10 @@ public class GameScreenActivity extends AppCompatActivity {
                 Button button = buttons[row][col];
 
                 int width = button.getWidth();
-                //button.setMinWidth(width);
-                button.setMaxWidth(10);
+                button.setMinWidth(width);
 
                 int height = button.getHeight();
-                //button.setMinHeight(height);
-                button.setMaxHeight(10);
+                button.setMinHeight(height);
             }
         }
     }
