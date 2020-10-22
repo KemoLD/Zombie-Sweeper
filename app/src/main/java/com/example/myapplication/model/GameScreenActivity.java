@@ -17,7 +17,10 @@ import android.widget.Toast;
 import com.example.myapplication.R;
 import com.example.myapplication.logic.Cell;
 
+import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.Random;
+import java.util.Set;
 
 public class GameScreenActivity extends AppCompatActivity {
 
@@ -26,19 +29,15 @@ public class GameScreenActivity extends AppCompatActivity {
 
     private int NUM_ZOMBIES; //chosen number of zombies from OptionsMenu
 
-    private int NUM_SCANS = 0;
-    private int NUM_ZOMBS = 0;
-
-    private int zombiecellsCnt = 0;
-
-    Random rand = new Random();
+    private int NUM_SCANS = 0;  //for th display
+    private int NUM_ZOMBS = 0;  //for the display
 
     TextView numScans;
     TextView numZombies;
 
     Button buttons[][];
 
-    public int[] zombiecells;
+    private Set<Integer> zombiecells;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,15 +53,9 @@ public class GameScreenActivity extends AppCompatActivity {
 
         buttons = new Button[NUM_ROWS][NUM_COLS];
 
-
-        zombiecells = new int[NUM_ZOMBIES * 2];
-        for (int i = 0; i < NUM_ZOMBIES * 2; i = i+2){
-            int int_random = rand.nextInt(NUM_ROWS);
-            zombiecells[i] = int_random;
-        }
-        for (int j = 1; j < NUM_ZOMBIES * 2; j = j+2){
-            int int_random2 = rand.nextInt(NUM_COLS);
-            zombiecells[j] = int_random2;
+        zombiecells = new LinkedHashSet<Integer>();
+        while(zombiecells.size() < NUM_ZOMBIES){
+            zombiecells.add( new Random().nextInt(NUM_COLS * NUM_ROWS));
         }
 
 
@@ -76,6 +69,7 @@ public class GameScreenActivity extends AppCompatActivity {
     private void populateButtons() {
         TableLayout table = (TableLayout) findViewById(R.id.tableForButtons);
 
+
         for (int row = 0; row < NUM_ROWS; row++){
             TableRow tableRow = new TableRow(this);
             tableRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT, 1.0f));
@@ -85,19 +79,17 @@ public class GameScreenActivity extends AppCompatActivity {
                 final int FINAL_COL =col;
                 final int FINAL_ROW = row;
                 Button button = new Button(this);
-                final Cell ButtonManager = new Cell(button);
+                final Cell ButtonManager = new Cell(button, ((col * NUM_ROWS ) + row ));
                 
                 button.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1.0f));
 
-                button.setText("" + col + ", " + row);
-
                 button.setPadding(0, 0, 0, 0); //So small buttons don't cut text
+                button.setBackgroundResource(R.drawable.cell);
+                //button.setText(""+ ((col * NUM_ROWS  ) + row ));
 
-
-
-                if ((zombiecells[zombiecellsCnt] == row) && (zombiecells[zombiecellsCnt+1]) == col){
-                    ButtonManager.setZombie(true);
-                    zombiecellsCnt = zombiecellsCnt + 2;
+                int number = (col * NUM_ROWS ) + row;
+                if ( zombiecells.contains(number)) {
+                        ButtonManager.setZombie(true);
                 }
 
 
@@ -113,8 +105,11 @@ public class GameScreenActivity extends AppCompatActivity {
 
                 tableRow.addView(button);
                 buttons[row][col] = button;
+
             }
         }
+
+
     }
 
     private void gridButtonClicked(int col, int row, Cell ButtonManager) {
@@ -130,18 +125,12 @@ public class GameScreenActivity extends AppCompatActivity {
          * rescale starting bitmap to one that is small enough that it can stretch up but button won't change its size
          */
 
-        //scale image to button in JellyBean (4.1 or newer)
-        int newWidth = button.getWidth();
-        int newHeight = button.getHeight();
-        Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.zombieincell);
-        Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, true);
-        Resources resource = getResources();
 
         if (ButtonManager.isZombie() == true) { //if button == zombie
             if (ButtonManager.isRevealed() == false) {
                 Toast.makeText(this, "ZOMBIE FOUND", Toast.LENGTH_SHORT).show();
                 button.setText("");
-                button.setBackground(new BitmapDrawable(resource, scaledBitmap));
+                button.setBackgroundResource(R.drawable.zombieincell);
                 NUM_ZOMBS++;
                 numZombies.setText("Found " + NUM_ZOMBS + " of " + NUM_ZOMBIES + " Zombies");
                 ButtonManager.setRevealed(true);
@@ -172,6 +161,7 @@ public class GameScreenActivity extends AppCompatActivity {
                 Toast.makeText(this, "Scanning row " + row + " and column " + col, Toast.LENGTH_SHORT).show();
                 String tmp2 = String.valueOf(scan(col, row));
                 button.setText(tmp2);
+                button.setBackgroundResource(R.drawable.emptycell);
                 //button.setText(scan());
                 numScans.setText("Number of tombstones tripped on:" + NUM_SCANS);
                 ButtonManager.setScanned(true);
