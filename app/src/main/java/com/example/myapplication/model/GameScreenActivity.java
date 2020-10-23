@@ -91,8 +91,7 @@ public class GameScreenActivity extends AppCompatActivity {
 
         for (int row = 0; row < NUM_ROWS; row++){
             TableRow tableRow = new TableRow(this);
-            float tablesize = 6/NUM_ROWS;
-            tableRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,0, 1.0f));
+            tableRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,TableLayout.LayoutParams.MATCH_PARENT, 1.0f));
             table.addView(tableRow);
 
             for (int col = 0; col < NUM_COLS; col++){
@@ -101,23 +100,22 @@ public class GameScreenActivity extends AppCompatActivity {
                 Button button = new Button(this);
                 final Cell ButtonManager = new Cell(button, ((col * NUM_ROWS ) + row ));
                 
-                button.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 1.0f));
+                button.setLayoutParams(new TableRow.LayoutParams(90, 90, 1.0f));
 
                 button.setPadding(0, 0, 0, 0); //So small buttons don't cut text
                 button.setBackground(getResources().getDrawable(R.drawable.cell));
-                //button.setText(""+ ((col * NUM_ROWS  ) + row ));
 
                 int number = (col * NUM_ROWS ) + row;
                 if ( zombiecells.contains(number)) {
                         ButtonManager.setZombie(true);
                         button.setText("z");
+                        button.setTextSize(0);
                 }
 
 
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        //boolean clicked = false;
                         ButtonManager.setClicked(true);
                         gridButtonClicked(FINAL_COL,FINAL_ROW, ButtonManager);
                     }
@@ -155,8 +153,7 @@ public class GameScreenActivity extends AppCompatActivity {
 
         if (ButtonManager.isZombie() == true) { //if button == zombie
             if (ButtonManager.isRevealed() == false) {
-                //button.setBackground(new BitmapDrawable(resource, scaledBitmap));
-                button.setBackground(getResources().getDrawable(R.drawable.zombieincell));
+                button.setBackground(new BitmapDrawable(resource, scaledBitmap));
                 NUM_ZOMBS++;
                 numZombies.setText("Found " + NUM_ZOMBS + " of " + NUM_ZOMBIES + " Zombies");
                 ButtonManager.setRevealed(true);
@@ -172,48 +169,32 @@ public class GameScreenActivity extends AppCompatActivity {
                 }
 
                 else{
-                    //Toast.makeText(this, "Scanning row " + row + " and column " + col, Toast.LENGTH_SHORT).show();
                     NUM_SCANS++;
                     numScans.setText("Number of scans:" + NUM_SCANS);
                     ButtonManager.setScanned(true);
-                    scan(col,row);
+                    scan(col,row,button);
 
                 }
             }
         }
 
-        if (ButtonManager.isZombie() == false) {
+        else {
             if (ButtonManager.isRevealed() == true) {
                 return;
-                /*
-                if (ButtonManager.isScanned() == true) {
-                    return;
-                }
-
-                else {
-                    NUM_SCANS++;
-                    numScans.setText("Number of scans:" + NUM_SCANS);
-                    ButtonManager.setScanned(true);
-                    scan(col, row);
-
-                }
-
-                 */
             }
             else{
                 ButtonManager.setRevealed(true);
-                //button.setBackground(new BitmapDrawable(resource, scaledempty));
-                button.setBackground(getResources().getDrawable(R.drawable.emptycell));
+                button.setBackground(new BitmapDrawable(resource, scaledempty));
                 NUM_SCANS++;
                 numScans.setText("Number of scans:" + NUM_SCANS);
                 ButtonManager.setScanned(true);
-                scan(col, row);
+                scan(col, row,button);
 
             }
         }
     }
 
-    public void scan(int col, int row) {
+    public void scan(int col, int row, Button Jbutton) {
 
         int scan_result = 0;
 
@@ -231,7 +212,9 @@ public class GameScreenActivity extends AppCompatActivity {
             }
         }
 
-        Toast.makeText(this, "There are " + scan_result + " zombies in that row and column", Toast.LENGTH_SHORT).show();
+        Jbutton.setText("" + scan_result);
+        Jbutton.setTextSize(2);
+
     }
 
     public void lockButtonSizes() {
