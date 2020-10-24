@@ -8,15 +8,17 @@ public class Cell {
     private boolean isScanned;
     private boolean isRevealed;
     private boolean isZombie;
+    private int number;
 
     private Button button;
 
-    public Cell(Button Jbutton) {
+    public Cell(Button Jbutton, int Jnumber) {
         button = Jbutton;
         isClicked = false;
         isScanned = false;
         isRevealed = false;
         isZombie= false;
+        number = Jnumber;
     }
 
     public Button getButton() {
@@ -57,6 +59,10 @@ public class Cell {
 
     public void setButton(Button button) {
         this.button = button;
+    }
+
+    public int getNumber() {
+        return number;
     }
 }
 

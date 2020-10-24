@@ -186,6 +186,28 @@
                 android:textColor="#FFFFFF"
                 android:textSize="18sp" />
 
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:autoLink="web"
+                android:fontFamily="@font/green"
+                android:padding="10dp"
+                android:text="@string/game_won_popup_image"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:autoLink="web"
+                android:fontFamily="@font/green"
+                android:padding="10dp"
+                android:text="@string/http_www_theorangeday_com_author_thomasfrancis"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
+
 
         </LinearLayout>
     </ScrollView>

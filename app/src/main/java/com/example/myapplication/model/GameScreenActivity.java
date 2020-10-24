@@ -2,22 +2,28 @@ package com.example.myapplication.model;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.PopupWindow;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
-
+import android.os.Vibrator;
 import com.example.myapplication.R;
 import com.example.myapplication.logic.Cell;
-
+import java.util.LinkedHashSet;
 import java.util.Random;
+import java.util.Set;
 
 public class GameScreenActivity extends AppCompatActivity {
 
@@ -26,27 +32,27 @@ public class GameScreenActivity extends AppCompatActivity {
 
     private int NUM_ZOMBIES; //chosen number of zombies from OptionsMenu
 
-    private int NUM_SCANS = 0;
-    private int NUM_ZOMBS = 0;
+    private int NUM_SCANS = 0;  //for th display
+    private int NUM_ZOMBS = 0;  //for the display
 
-    private int zombiecellsCnt = 0;
+    private TextView numScans;
+    private TextView numZombies;
 
-    Random rand = new Random();
+    private Vibrator v;
 
-    TextView numScans;
-    TextView numZombies;
+    private Button buttons[][];          //holds the cells for the grid
 
-    Button buttons[][];
+    private Set<Integer> zombiecells;    //holds random numbers to determine which cells have a zombie
 
-    public int[] zombiecells;
+    private PopupWindow popupWindow;  //popup menu once game is won
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //NUM_COLS = getIntent().getIntExtra("columns",0);
-        //NUM_ROWS = getIntent().getIntExtra("rows",0);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_screen);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);  //for the vibration effect
 
         NUM_COLS = getIntent().getIntExtra("columns",0);
         NUM_ROWS = getIntent().getIntExtra("rows",0);
@@ -54,15 +60,9 @@ public class GameScreenActivity extends AppCompatActivity {
 
         buttons = new Button[NUM_ROWS][NUM_COLS];
 
-
-        zombiecells = new int[NUM_ZOMBIES * 2];
-        for (int i = 0; i < NUM_ZOMBIES * 2; i = i+2){
-            int int_random = rand.nextInt(NUM_ROWS);
-            zombiecells[i] = int_random;
-        }
-        for (int j = 1; j < NUM_ZOMBIES * 2; j = j+2){
-            int int_random2 = rand.nextInt(NUM_COLS);
-            zombiecells[j] = int_random2;
+        zombiecells = new LinkedHashSet<Integer>();   //assignes zombies to random cells
+        while(zombiecells.size() < NUM_ZOMBIES){
+            zombiecells.add( new Random().nextInt(NUM_COLS * NUM_ROWS));
         }
 
 
@@ -71,40 +71,47 @@ public class GameScreenActivity extends AppCompatActivity {
         numScans = (TextView)findViewById(R.id.textViewRight);
         numZombies = (TextView)findViewById(R.id.textViewLeft);
         numZombies.setText("Found " + NUM_ZOMBS + " of " + NUM_ZOMBIES + " Zombies");
+
+        Button back = (Button)findViewById(R.id.gamebackbutton);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void populateButtons() {
         TableLayout table = (TableLayout) findViewById(R.id.tableForButtons);
 
+
         for (int row = 0; row < NUM_ROWS; row++){
             TableRow tableRow = new TableRow(this);
-            tableRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT, 1.0f));
+            tableRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,TableLayout.LayoutParams.MATCH_PARENT, 1.0f));
             table.addView(tableRow);
 
             for (int col = 0; col < NUM_COLS; col++){
                 final int FINAL_COL =col;
                 final int FINAL_ROW = row;
                 Button button = new Button(this);
-                final Cell ButtonManager = new Cell(button);
+                final Cell ButtonManager = new Cell(button, ((col * NUM_ROWS ) + row ));
                 
-                button.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1.0f));
-
-                button.setText("" + col + ", " + row);
+                button.setLayoutParams(new TableRow.LayoutParams(90, 90, 1.0f));
 
                 button.setPadding(0, 0, 0, 0); //So small buttons don't cut text
+                button.setBackground(getResources().getDrawable(R.drawable.cell));
 
-
-
-                if ((zombiecells[zombiecellsCnt] == row) && (zombiecells[zombiecellsCnt+1]) == col){
-                    ButtonManager.setZombie(true);
-                    zombiecellsCnt = zombiecellsCnt + 2;
+                int number = (col * NUM_ROWS ) + row;
+                if ( zombiecells.contains(number)) {
+                        ButtonManager.setZombie(true);
+                        button.setText("z");
+                        button.setTextColor(getResources().getColor(android.R.color.transparent));
                 }
 
 
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        //boolean clicked = false;
                         ButtonManager.setClicked(true);
                         gridButtonClicked(FINAL_COL,FINAL_ROW, ButtonManager);
                     }
@@ -113,98 +120,137 @@ public class GameScreenActivity extends AppCompatActivity {
 
                 tableRow.addView(button);
                 buttons[row][col] = button;
+
             }
         }
+        lockButtonSizes();
+
+
     }
 
     private void gridButtonClicked(int col, int row, Cell ButtonManager) {
 
-        //Toast.makeText(this, "Button clicked: " + col + ", " + row, Toast.LENGTH_SHORT).show();
+        lockButtonSizes();
+
         Button button = buttons[row][col];
 
-        lockButtonSizes(); //lock button sizes
-
-        /*
-         * Scale image to button on devices older than 4.1
-         * button.setBackgroundResource(R.drawable.gameicon);
-         * rescale starting bitmap to one that is small enough that it can stretch up but button won't change its size
-         */
-
-        //scale image to button in JellyBean (4.1 or newer)
         int newWidth = button.getWidth();
         int newHeight = button.getHeight();
         Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.zombieincell);
         Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, true);
+
+        Bitmap emptyBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.emptycell);
+        Bitmap scaledempty = Bitmap.createScaledBitmap(emptyBitmap, newWidth, newHeight, true);
         Resources resource = getResources();
 
-        if (ButtonManager.isZombie() == true) { //if button == zombie
+
+
+
+
+        if (ButtonManager.isZombie()) { //if button == zombie
             if (ButtonManager.isRevealed() == false) {
-                Toast.makeText(this, "ZOMBIE FOUND", Toast.LENGTH_SHORT).show();
-                button.setText("");
-                button.setBackground(new BitmapDrawable(resource, scaledBitmap));
                 NUM_ZOMBS++;
                 numZombies.setText("Found " + NUM_ZOMBS + " of " + NUM_ZOMBIES + " Zombies");
                 ButtonManager.setRevealed(true);
+                button.setText("");   //marks the zombie as seen so that it is not included in the scan
+                button.setBackground(new BitmapDrawable(resource, scaledBitmap));
+                v.vibrate(400);   //vibrates for 400 milliseconds
+                if(NUM_ZOMBS == NUM_ZOMBIES){
+                    gameWon();
+                }
             }
-            if (ButtonManager.isRevealed() == true) {
-                if (ButtonManager.isScanned() == true) {
+            else {
+                if (ButtonManager.isScanned()) {
                     return;
                 }
 
-                if (ButtonManager.isScanned() == false) {
-                    Toast.makeText(this, "Scanning row " + row + " and column " + col, Toast.LENGTH_SHORT).show();
-                    String tmp = String.valueOf(scan(col, row));
-                    button.setText(tmp);
-                    //button.setText(scan());
-                    numScans.setText("Number of tombstones tripped on:" + NUM_SCANS);
+                else{
+                    NUM_SCANS++;
+                    numScans.setText("Number of scans:" + NUM_SCANS);
                     ButtonManager.setScanned(true);
+                    scan(col,row);
 
                 }
             }
         }
 
-        if (ButtonManager.isZombie() == false) {
-            if (ButtonManager.isScanned() == true) {
+        else {
+            if (ButtonManager.isRevealed() == true) {
                 return;
             }
-
-            if (ButtonManager.isScanned() == false) {
-                Toast.makeText(this, "Scanning row " + row + " and column " + col, Toast.LENGTH_SHORT).show();
-                String tmp2 = String.valueOf(scan(col, row));
-                button.setText(tmp2);
-                //button.setText(scan());
-                numScans.setText("Number of tombstones tripped on:" + NUM_SCANS);
+            else{
+                ButtonManager.setRevealed(true);
+                button.setBackground(new BitmapDrawable(resource, scaledempty));
+                NUM_SCANS++;
+                numScans.setText("Number of scans:" + NUM_SCANS);
                 ButtonManager.setScanned(true);
-            }
+                scan(col, row);
 
+            }
         }
     }
 
-    private int scan(int col, int row) {
+    public void scan(int col, int row) {
+
         int scan_result = 0;
 
         //scan
         for (int i = 0; i < NUM_COLS; i++){
-            //if (buttons[i][col] )
+            Button button = buttons[row][i];
+            if(button.getText() == "z"){
+                scan_result++;
+            }
         }
+        for (int i = 0; i < NUM_ROWS; i++){
+            Button button = buttons[i][col];
+            if(button.getText() == "z"){
+                scan_result++;
+            }
+        }
+        Button Jbutton = buttons[row][col];
+        Jbutton.setText("" + scan_result);
+        Jbutton.setTextColor(Color.BLACK);
 
-        NUM_SCANS ++;
-        return scan_result;
+
     }
 
-    private void lockButtonSizes() {
+    public void lockButtonSizes() {
         for (int row = 0; row < NUM_ROWS; row++){
             for (int col = 0; col < NUM_COLS; col++){
                 Button button = buttons[row][col];
 
                 int width = button.getWidth();
                 button.setMinWidth(width);
-                button.setMinWidth(width);
+                button.setMaxWidth(width);
 
                 int height = button.getHeight();
                 button.setMinHeight(height);
-                button.setMinHeight(height);
+                button.setMaxHeight(height);
             }
         }
+    }
+
+    public void gameWon(){
+
+        LayoutInflater layoutInflater = (LayoutInflater) GameScreenActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View customView = layoutInflater.inflate(R.layout.popupmenu,null);
+
+
+        //instantiate popup window
+        popupWindow = new PopupWindow(customView, WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
+
+        //display the popup window
+        popupWindow.showAtLocation(customView, Gravity.CENTER, 0, 0);
+
+
+        Button won = (Button)customView.findViewById(R.id.popupbutton);
+        won.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+                finish();
+            }
+        });
+
     }
 }
