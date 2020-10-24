@@ -6,25 +6,21 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.PopupWindow;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.os.Vibrator;
-
 import com.example.myapplication.R;
 import com.example.myapplication.logic.Cell;
-
 import java.util.LinkedHashSet;
 import java.util.Random;
 import java.util.Set;
@@ -109,7 +105,7 @@ public class GameScreenActivity extends AppCompatActivity {
                 if ( zombiecells.contains(number)) {
                         ButtonManager.setZombie(true);
                         button.setText("z");
-                        button.setTextSize(0);
+                        button.setTextColor(getResources().getColor(android.R.color.transparent));
                 }
 
 
@@ -127,7 +123,7 @@ public class GameScreenActivity extends AppCompatActivity {
 
             }
         }
-        //lockButtonSizes();
+        lockButtonSizes();
 
 
     }
@@ -153,11 +149,11 @@ public class GameScreenActivity extends AppCompatActivity {
 
         if (ButtonManager.isZombie() == true) { //if button == zombie
             if (ButtonManager.isRevealed() == false) {
-                button.setBackground(new BitmapDrawable(resource, scaledBitmap));
                 NUM_ZOMBS++;
                 numZombies.setText("Found " + NUM_ZOMBS + " of " + NUM_ZOMBIES + " Zombies");
                 ButtonManager.setRevealed(true);
                 button.setText("");   //marks the zombie as seen so that it is not included in the scan
+                button.setBackground(new BitmapDrawable(resource, scaledBitmap));
                 v.vibrate(400);   //vibrates for 400 milliseconds
                 if(NUM_ZOMBS == NUM_ZOMBIES){
                     gameWon();
@@ -172,7 +168,7 @@ public class GameScreenActivity extends AppCompatActivity {
                     NUM_SCANS++;
                     numScans.setText("Number of scans:" + NUM_SCANS);
                     ButtonManager.setScanned(true);
-                    scan(col,row,button);
+                    scan(col,row);
 
                 }
             }
@@ -188,13 +184,13 @@ public class GameScreenActivity extends AppCompatActivity {
                 NUM_SCANS++;
                 numScans.setText("Number of scans:" + NUM_SCANS);
                 ButtonManager.setScanned(true);
-                scan(col, row,button);
+                scan(col, row);
 
             }
         }
     }
 
-    public void scan(int col, int row, Button Jbutton) {
+    public void scan(int col, int row) {
 
         int scan_result = 0;
 
@@ -211,9 +207,10 @@ public class GameScreenActivity extends AppCompatActivity {
                 scan_result++;
             }
         }
-
+        Button Jbutton = buttons[row][col];
         Jbutton.setText("" + scan_result);
-        Jbutton.setTextSize(2);
+        Jbutton.setTextColor(Color.BLACK);
+
 
     }
 
