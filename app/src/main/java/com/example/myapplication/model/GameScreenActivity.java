@@ -147,7 +147,7 @@ public class GameScreenActivity extends AppCompatActivity {
 
 
 
-        if (ButtonManager.isZombie() == true) { //if button == zombie
+        if (ButtonManager.isZombie()) { //if button == zombie
             if (ButtonManager.isRevealed() == false) {
                 NUM_ZOMBS++;
                 numZombies.setText("Found " + NUM_ZOMBS + " of " + NUM_ZOMBIES + " Zombies");
@@ -160,7 +160,7 @@ public class GameScreenActivity extends AppCompatActivity {
                 }
             }
             else {
-                if (ButtonManager.isScanned() == true) {
+                if (ButtonManager.isScanned()) {
                     return;
                 }
 
