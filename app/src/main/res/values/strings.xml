@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">My Application</string>
-    <string name="minesweeper">Minesweeper</string>
     <string name="skip">skip</string>
     <string name="authors">Made by Nyarika Kemo Sonko and Micah Lau</string>
     <string name="appiconinhomescreen">appiconinhomescreen</string>
@@ -31,8 +29,8 @@
 
     <string name="scansUsed">Number of tombstones tripped on: </string>
     <string name="minesFound">Found x of y zombies.</string>
-    <string name="msg_won">!!!CONGRATULATIONS!!!\nYou Completed the Game! </string>
     <string name="congratulation_game_won">Congratulation! Game Won!</string>
     <string name="http_www_theorangeday_com_author_thomasfrancis">http://www.theorangeday.com/author/thomasfrancis/</string>
     <string name="game_won_popup_image">GAME WON POPUP IMAGE</string>
+    <string name="number_of_scans_0">Number of scans: 0</string>
 </resources>

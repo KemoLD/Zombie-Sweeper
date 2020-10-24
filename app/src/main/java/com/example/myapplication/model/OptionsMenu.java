@@ -13,7 +13,6 @@ import android.widget.Spinner;
 
 import com.example.myapplication.R;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 

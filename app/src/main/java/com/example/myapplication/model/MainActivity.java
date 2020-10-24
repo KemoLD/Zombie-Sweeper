@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 if(active) {
                     startActivity(intent);
-                    ;
                     finish();
                 }
             }

@@ -1,13 +1,10 @@
 package com.example.myapplication.model;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -99,7 +96,7 @@ public class GameScreenActivity extends AppCompatActivity {
                 button.setLayoutParams(new TableRow.LayoutParams(90, 90, 1.0f));
 
                 button.setPadding(0, 0, 0, 0); //So small buttons don't cut text
-                button.setBackground(getResources().getDrawable(R.drawable.cell));
+                button.setBackground(ResourcesCompat.getDrawable(getResources(),R.drawable.cell, null));
 
                 int number = (col * NUM_ROWS ) + row;
                 if ( zombiecells.contains(number)) {
@@ -123,29 +120,12 @@ public class GameScreenActivity extends AppCompatActivity {
 
             }
         }
-        lockButtonSizes();
-
 
     }
 
     private void gridButtonClicked(int col, int row, Cell ButtonManager) {
 
-        lockButtonSizes();
-
         Button button = buttons[row][col];
-
-        int newWidth = button.getWidth();
-        int newHeight = button.getHeight();
-        Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.zombieincell);
-        Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, true);
-
-        Bitmap emptyBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.emptycell);
-        Bitmap scaledempty = Bitmap.createScaledBitmap(emptyBitmap, newWidth, newHeight, true);
-        Resources resource = getResources();
-
-
-
-
 
         if (ButtonManager.isZombie()) { //if button == zombie
             if (ButtonManager.isRevealed() == false) {
@@ -153,7 +133,7 @@ public class GameScreenActivity extends AppCompatActivity {
                 numZombies.setText("Found " + NUM_ZOMBS + " of " + NUM_ZOMBIES + " Zombies");
                 ButtonManager.setRevealed(true);
                 button.setText("");   //marks the zombie as seen so that it is not included in the scan
-                button.setBackground(new BitmapDrawable(resource, scaledBitmap));
+                button.setBackground(ResourcesCompat.getDrawable(getResources(),R.drawable.zombieincell, null));
                 v.vibrate(400);   //vibrates for 400 milliseconds
                 if(NUM_ZOMBS == NUM_ZOMBIES){
                     gameWon();
@@ -166,7 +146,7 @@ public class GameScreenActivity extends AppCompatActivity {
 
                 else{
                     NUM_SCANS++;
-                    numScans.setText("Number of scans:" + NUM_SCANS);
+                    numScans.setText("Number of scans: " + NUM_SCANS);
                     ButtonManager.setScanned(true);
                     scan(col,row);
 
@@ -180,9 +160,9 @@ public class GameScreenActivity extends AppCompatActivity {
             }
             else{
                 ButtonManager.setRevealed(true);
-                button.setBackground(new BitmapDrawable(resource, scaledempty));
+                button.setBackground(ResourcesCompat.getDrawable(getResources(),R.drawable.emptycell, null));
                 NUM_SCANS++;
-                numScans.setText("Number of scans:" + NUM_SCANS);
+                numScans.setText("Number of scans: " + NUM_SCANS);
                 ButtonManager.setScanned(true);
                 scan(col, row);
 
@@ -212,22 +192,6 @@ public class GameScreenActivity extends AppCompatActivity {
         Jbutton.setTextColor(Color.BLACK);
 
 
-    }
-
-    public void lockButtonSizes() {
-        for (int row = 0; row < NUM_ROWS; row++){
-            for (int col = 0; col < NUM_COLS; col++){
-                Button button = buttons[row][col];
-
-                int width = button.getWidth();
-                button.setMinWidth(width);
-                button.setMaxWidth(width);
-
-                int height = button.getHeight();
-                button.setMinHeight(height);
-                button.setMaxHeight(height);
-            }
-        }
     }
 
     public void gameWon(){
